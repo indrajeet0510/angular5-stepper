@@ -1,4 +1,4 @@
-export class IStepItem {
+export interface IStepItem {
   title?: string;
   component?: any;
   status?: number;

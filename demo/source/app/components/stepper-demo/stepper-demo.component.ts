@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {IStepNavbar} from "../../../../src/models/step-navbar.model";
+import {IStepNavbar} from "angular5-stepper";
 import {View11Component} from "../stepper-views/navlist1/view1-1/view1-1.component";
 import {View12Component} from "../stepper-views/navlist1/view1-2/view1-2.component";
 import {View21Component} from "../stepper-views/navlist2/view2-1/view2-1.component";

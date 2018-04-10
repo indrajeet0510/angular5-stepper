@@ -1,6 +1,6 @@
-import {Component, Input, EventEmitter, Output} from "@angular/core";
-import {Observable, Subscription} from "rxjs";
-import {IStepNavbar} from "../../models/step-navbar.model";
+import {  Component, Input, EventEmitter, Output } from '@angular/core';
+import {  Observable } from 'rxjs';
+import { IStepNavbar} from '../../models/step-navbar.model';
 @Component({
   selector: 'stepper-navbar-cmp',
   templateUrl: './stepper-navbar.component.html',
@@ -10,18 +10,19 @@ import {IStepNavbar} from "../../models/step-navbar.model";
 })
 export class StepperNavbarComponent {
   @Input() public navbarList: IStepNavbar[];
-  @Input() activeListItem: Observable<any>;
-  @Output() onItemClick: EventEmitter<any>;
-  @Input() public activeItemId: String;
-  @Input('statusLabelList') STATUS_LABELS: any[];
-  constructor() {
+  @Input() public activeListItem: Observable<any>;
+  @Output() public onItemClick: EventEmitter<any>;
+  @Input() public activeItemId: string;
+  @Input('statusLabelList') public STATUS_LABELS: any[];
+  public constructor() {
     this.onItemClick = new EventEmitter();
 
   }
 
-  selectItem(i: number,j: number) {
+  public selectItem(i: number,j: number) {
     if(this.navbarList[i] && this.navbarList[i].itemList && this.navbarList[i].itemList[j]) {
-      if (this.navbarList[i].itemList[j].disabled || (!this.navbarList[i].itemList[j].component)) {
+      if (this.navbarList[i].itemList[j].disabled
+        || (!this.navbarList[i].itemList[j].component)) {
         return;
       }
       this.onItemClick.emit(this.navbarList[i].itemList[j]);

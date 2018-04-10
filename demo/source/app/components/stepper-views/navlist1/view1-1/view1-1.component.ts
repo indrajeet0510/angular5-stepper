@@ -5,7 +5,7 @@ import {Component, Output, EventEmitter} from "@angular/core";
 })
 export class View11Component {
   @Output() public back: EventEmitter<any>;
-  @Output() public next: EventEmitter<any>
+  @Output() public next: EventEmitter<any>;
 
   constructor() {
     this.back = new EventEmitter();

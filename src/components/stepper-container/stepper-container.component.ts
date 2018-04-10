@@ -1,6 +1,6 @@
-import {Component, Input} from "@angular/core";
-import {Observable, BehaviorSubject} from "rxjs/Rx";
-import {IStepNavbar} from "../../models/step-navbar.model";
+import { Component, Input} from '@angular/core';
+import { BehaviorSubject} from 'rxjs/Rx';
+import { IStepNavbar} from '../../models/step-navbar.model';
 @Component({
   selector: 'stepper-container-cmp',
   templateUrl: './stepper-container.component.html',
@@ -9,15 +9,19 @@ import {IStepNavbar} from "../../models/step-navbar.model";
   ]
 })
 export class StepperContainerComponent {
-  @Input() navbarList: IStepNavbar[];
-  @Input() statusLabelList?: any[] = [{ title: 'Not started', customStyle: ''}, {title: 'In Progress', backgroundColor: ''}, {title: 'Completed', customStyle: ''}, {title: 'Draft', customStyle: ''}];
-  activeListItem: BehaviorSubject<any>;
+  @Input() public navbarList: IStepNavbar[];
+  @Input() public statusLabelList?: any[] = [
+    { title: 'Not started', backgroundColor: ''},
+    {title: 'In Progress', backgroundColor: ''},
+    {title: 'Completed', backgroundColor: ''},
+    {title: 'Draft', backgroundColor: ''}];
+  public activeListItem: BehaviorSubject<any>;
   public activeItemId: string;
-  constructor() {
+  public constructor() {
     this.activeListItem = new BehaviorSubject(null);
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     const firstItem = (this.navbarList[0] && this.navbarList[0].itemList) ? this.navbarList[0].itemList[0] : null;
     if (firstItem) {
       this.activeItemId = 'id-0-0';
@@ -26,7 +30,7 @@ export class StepperContainerComponent {
 
   }
 
-  selectItem(item: any) {
+  public selectItem(item: any) {
     if (this.activeListItem.value != item) {
       this.activeListItem.next(item);
       let keyA: number = 0;
@@ -34,7 +38,7 @@ export class StepperContainerComponent {
         if (nb && nb.itemList) {
           let keyB: number = 0;
           for (let nbIt of nb.itemList) {
-            if(item == nbIt) {
+            if(item === nbIt) {
               this.activeItemId = `id-${keyA}-${keyB}`;
               this.navbarList[keyA].itemList[keyB].status = 1;
             } else {
@@ -48,14 +52,14 @@ export class StepperContainerComponent {
     }
   }
 
-  handleNavigation(direction: boolean = false) {
+  public handleNavigation(direction: boolean = false) {
     let tempId: string = this.activeItemId.split('id-')[1];
     let [ navListIndex1, itemListIndex1 ] = (tempId && tempId.length) ? tempId.split('-') : [null, null];
-    if (navListIndex1 == null || itemListIndex1 == null) {
+    if (navListIndex1 === null || itemListIndex1 === null) {
       return;
     }
-    let navListIndex: number = parseInt(navListIndex1);
-    let itemListIndex: number = parseInt(itemListIndex1);
+    let navListIndex: number = parseInt(navListIndex1, 10);
+    let itemListIndex: number = parseInt(itemListIndex1, 10);
     if (direction) {
       // Check if current itemListIndex is less than the max itemListIndex
       if(itemListIndex < this.navbarList[navListIndex].itemList.length - 1) {
@@ -85,10 +89,12 @@ export class StepperContainerComponent {
         }
         this.selectItem(itemToBeSelected);
       } else {
-        // If currentItemListIndex is less than the zero check for previous navList and it's min index is greater than or equal to zero select the max item from that list
+        // If currentItemListIndex is less than the zero check
+        // for previous navList and it's min index is greater than or equal to zero select the max item from that list
         if ((navListIndex - 1) >= 0) {
           if(this.navbarList[navListIndex - 1].itemList.length - 1 >= 0) {
-            const itemToBeSelected = this.navbarList[navListIndex - 1].itemList[this.navbarList[navListIndex - 1].itemList.length - 1];
+            const itemToBeSelected = this.navbarList[navListIndex - 1]
+              .itemList[this.navbarList[navListIndex - 1].itemList.length - 1];
             if (itemToBeSelected.disabled || (!itemToBeSelected.component)) {
               return;
             }
