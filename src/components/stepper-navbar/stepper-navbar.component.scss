@@ -1,0 +1,40 @@
+.stepper-navbar{
+  display: flex;
+  flex-direction: column;
+  .s-navbar-heading{
+    padding: 0.25rem;
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  .s-navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    margin: 0 0 1rem 0;
+    padding: 0.25rem;
+    list-style: none;
+    .s-navbar-item{
+      align-items: center;
+      justify-content: center;
+      padding: 0.25rem;
+      cursor: pointer;
+      &.active {
+        background: #FFF;
+        font-weight: bold;
+      }
+      &.disabled {
+        color: #CCCCCC;
+      }
+      a {
+        display: block;
+        margin:0;
+        padding:0;
+        font-size: 1rem;
+      }
+      span {
+        font-size: 0.7rem;
+      }
+    }
+  }
+}

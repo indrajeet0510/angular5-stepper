@@ -1,0 +1,11 @@
+<div class="s-n-container" *ngIf="navbarList && navbarList.length">
+  <div class="stepper-navbar" *ngFor="let step of navbarList; let i = index;">
+    <h2 class="s-navbar-heading">{{step.heading}}</h2>
+    <ul class="s-navbar" *ngIf="step.itemList">
+      <li class="s-navbar-item" *ngFor="let it of step.itemList; let j = index;" (click)="selectItem(i,j)" [ngClass]="{'active': activeItemId == ('id-'+i+'-'+j), 'disabled': (!it.component || it.disabled)}">
+        <a>{{it.title}}</a>
+        <span [ngStyle]="STATUS_LABELS[it.status].customStyle">{{STATUS_LABELS[it.status]?.title}}</span>
+      </li>
+    </ul>
+  </div>
+</div>

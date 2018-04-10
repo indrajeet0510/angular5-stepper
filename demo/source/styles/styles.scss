@@ -1,0 +1,29 @@
+@import "~bootstrap/scss/bootstrap";
+$font-size-base: 10px;
+
+// Font awesome imports
+$fa-font-path : '~font-awesome/fonts';
+@import '~font-awesome/scss/font-awesome';
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f5f5f5;
+  > *{
+    flex: 1;
+    height: auto;
+  }
+
+  .margin-bottom {
+    margin-bottom: 1rem;
+  }
+  .margin-top{
+    margin-top: 1rem;
+  }
+}

@@ -1,0 +1,20 @@
+.container {
+  max-width: 960px;
+}
+
+.site-header {
+  background-color: rgba(0, 0, 0, .85);
+  backdrop-filter: saturate(180%) blur(20px);
+  a {
+    color: #999;
+    transition: ease-in-out color .15s;
+    &:hover{
+      color: #fff;
+      text-decoration: none;
+    }
+    &.active{
+      color: #0074D9;
+      text-decoration: underline;
+    }
+  }
+}
