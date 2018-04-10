@@ -111,4 +111,6 @@ export class AppComponent {
 }
 ```
 
-
+## Screenshots
+![alt text](https://raw.githubusercontent.com/indrajeet0510/angular5-stepper/master/demo/screenshots/2.png)
+![alt text](https://raw.githubusercontent.com/indrajeet0510/angular5-stepper/master/demo/screenshots/1.png)
