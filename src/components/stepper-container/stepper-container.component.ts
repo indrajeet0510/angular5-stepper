@@ -31,7 +31,7 @@ export class StepperContainerComponent {
     this.onNavigation.emit({current: { navIndex: 0, itemIndex: 0}, prev: null});
   }
 
-  selectItem(item, navIndex, itemIndex) {
+  selectItem(item: any, navIndex: number, itemIndex: number) {
     if (this.activeListItem.value != item) {
       let itemIndexes = this.getActiveItemIndexes();
       if (!itemIndexes) {
