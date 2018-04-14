@@ -56,6 +56,7 @@ export class StepperViewComponent implements AfterViewInit{
             nextSub = this.currentComponent
               .instance.next.subscribe(() => this.navigate.emit(true));
           }
+          this.currentComponent.changeDetectorRef.detectChanges();
           this.currentComponent.onDestroy(() => {
             if (backSub) {
               backSub.unsubscribe();
