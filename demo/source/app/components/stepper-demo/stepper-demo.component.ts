@@ -7,8 +7,8 @@ import {View22Component} from "../stepper-views/navlist2/view2-2/view2-2.compone
 import {View23Component} from "../stepper-views/navlist2/view2-3/view2-3.component";
 
 @Component({
-    selector: 'admin-panel-cmp',
-    template: `<stepper-container-cmp [navbarList]="myNavbarList"></stepper-container-cmp>`
+  selector: 'admin-panel-cmp',
+  template: `<stepper-container-cmp  [navbarList]="myNavbarList" (onNavigation)="handleNavigationChange($event)"></stepper-container-cmp>`
 })
 
 export class StepperDemoComponent {
@@ -57,5 +57,14 @@ export class StepperDemoComponent {
         ]
       }
     ];
+  }
+
+  public handleNavigationChange(navData) {
+    /**
+     * It will be showing the current and previous itemIndexes relative to myNavbarList
+     * Output will be in format : {current: { navIndex: 0, itemIndex: 0}, prev: {navIndex:0, itemIndex: 1}
+     */
+    console.log('navData', navData);
+
   }
 }

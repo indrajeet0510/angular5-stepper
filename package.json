@@ -1,6 +1,6 @@
 {
   "name": "angular5-stepper",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Angular 5+ stepper module",
   "license": "MIT",
   "main": "./dist/index.umd.js",

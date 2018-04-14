@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { BehaviorSubject} from 'rxjs/Rx';
 import { IStepNavbar} from '../../models/step-navbar.model';
 @Component({
@@ -10,6 +10,7 @@ import { IStepNavbar} from '../../models/step-navbar.model';
 })
 export class StepperContainerComponent {
   @Input() public navbarList: IStepNavbar[];
+  @Output() onNavigation: EventEmitter<any>;
   @Input() public statusLabelList?: any[] = [
     { title: 'Not started', backgroundColor: ''},
     {title: 'In Progress', backgroundColor: ''},
@@ -27,12 +28,18 @@ export class StepperContainerComponent {
       this.activeItemId = 'id-0-0';
     }
     this.activeListItem.next(firstItem);
-
+    this.onNavigation.emit({current: { navIndex: 0, itemIndex: 0}, prev: null});
   }
 
-  public selectItem(item: any) {
+  selectItem(item, navIndex, itemIndex) {
     if (this.activeListItem.value != item) {
+      let itemIndexes = this.getActiveItemIndexes();
+      if (!itemIndexes) {
+        return;
+      }
+      let [ navListIndex, itemListIndex ] = itemIndexes;
       this.activeListItem.next(item);
+      this.onNavigation.emit({current: { navIndex, itemIndex}, prev: {navIndex: navListIndex, itemIndex: itemListIndex}});
       let keyA: number = 0;
       for(let nb of this.navbarList) {
         if (nb && nb.itemList) {
@@ -53,13 +60,11 @@ export class StepperContainerComponent {
   }
 
   public handleNavigation(direction: boolean = false) {
-    let tempId: string = this.activeItemId.split('id-')[1];
-    let [ navListIndex1, itemListIndex1 ] = (tempId && tempId.length) ? tempId.split('-') : [null, null];
-    if (navListIndex1 === null || itemListIndex1 === null) {
+    let itemIndexes = this.getActiveItemIndexes();
+    if (!itemIndexes) {
       return;
     }
-    let navListIndex: number = parseInt(navListIndex1, 10);
-    let itemListIndex: number = parseInt(itemListIndex1, 10);
+    let [ navListIndex, itemListIndex ] = itemIndexes;
     if (direction) {
       // Check if current itemListIndex is less than the max itemListIndex
       if(itemListIndex < this.navbarList[navListIndex].itemList.length - 1) {
@@ -67,7 +72,7 @@ export class StepperContainerComponent {
         if (itemToBeSelected.disabled || (!itemToBeSelected.component)) {
           return;
         }
-        this.selectItem(itemToBeSelected);
+        this.selectItem(itemToBeSelected, navListIndex, itemListIndex + 1);
       } else {
         // If currentItemListIndex is not less than the max itemListIndex check for another navList and it's max index
         if ((navListIndex + 1) <= this.navbarList.length - 1) {
@@ -76,7 +81,7 @@ export class StepperContainerComponent {
             if (itemToBeSelected.disabled || (!itemToBeSelected.component)) {
               return;
             }
-            this.selectItem(itemToBeSelected);
+            this.selectItem(itemToBeSelected, navListIndex + 1, 0);
           }
         }
       }
@@ -87,7 +92,7 @@ export class StepperContainerComponent {
         if (itemToBeSelected.disabled || (!itemToBeSelected.component)) {
           return;
         }
-        this.selectItem(itemToBeSelected);
+        this.selectItem(itemToBeSelected,navListIndex, itemListIndex - 1);
       } else {
         // If currentItemListIndex is less than the zero check
         // for previous navList and it's min index is greater than or equal to zero select the max item from that list
@@ -98,10 +103,25 @@ export class StepperContainerComponent {
             if (itemToBeSelected.disabled || (!itemToBeSelected.component)) {
               return;
             }
-            this.selectItem(itemToBeSelected);
+            this.selectItem(itemToBeSelected, navListIndex - 1, this.navbarList[navListIndex - 1].itemList.length - 1);
           }
         }
       }
     }
+  }
+
+  private getActiveItemIndexes() {
+    let tempId = this.activeItemId.split('id-')[1];
+    let [ navListIndex1, itemListIndex1 ] = (tempId && tempId.length) ? tempId.split('-') : [null, null];
+    if (navListIndex1 == null || itemListIndex1 == null) {
+      return;
+    }
+    let navListIndex = parseInt(navListIndex1);
+    let itemListIndex = parseInt(itemListIndex1);
+    if (isNaN(navListIndex) || isNaN(itemListIndex)){
+      return;
+    }
+
+    return [navListIndex, itemListIndex];
   }
 }
