@@ -61,7 +61,7 @@
     "tslint": "tslint"
   },
   "dependencies": {
-    "npm": "^5.8.0"
+    
   },
   "peerDependencies": {
     "@angular/common": "^5.2.0",
